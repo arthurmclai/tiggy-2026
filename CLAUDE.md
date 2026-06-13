@@ -49,11 +49,23 @@ To fire: `SomeEvent.Trigger(...)` or `MMEventManager.TriggerEvent(new SomeEvent(
 
 ### Custom game code
 
-All game-specific scripts live in `Assets/Scripts/`. Currently only `LevelManager/DifferentiatePlayers.cs` exists (stub — `OnMMEvent` not yet implemented). New systems (tiggy tag logic, custom power-ups, scoring) go here.
+All game-specific scripts live in `Assets/Scripts/`, namespaced by folder:
 
-### Player prefabs
+| Folder | Namespace | Contents |
+|---|---|---|
+| `Characters/` | `Tiggy.Characters` | `InfiniteHealth` (death resets health), `CharacterStunOnHit` (stuns self on hit, applies knockback deceleration) |
+| `Level/` | `Tiggy.Level` | Scene-level helpers: `DifferentiatePlayers`, `AssignPlayersToCinemachine`, `ConfineCinemachineToBounds` |
+| `Obstacles/` | `Tiggy.Obstacles` | `StunOnTouch` — subclass of `DamageOnTouch`, zero health damage, calls `CharacterStunOnHit.StunFor(duration)` |
+| `Modifiers/` | `Tiggy.Modifiers` | Abstract ScriptableObject bases: `Power`, `Usage`, `Resource`, `Area` — not yet implemented |
+| `Pickups/` | `Tiggy.Pickups` | `Pickup` — abstract `MMPoolableObject` composing the four modifier types — not yet implemented |
 
-`Assets/Prefabs/Players/Rectangle.prefab` — current player prefab. Assign `Character`, `CorgiController`, and desired `CharacterAbility` components here.
+### Player prefab
+
+`Assets/Prefabs/Characters/Rectangle.prefab` — current player prefab. Components: `Character`, `CorgiController`, `InfiniteHealth`, `CharacterStunOnHit`, and desired `CharacterAbility` components.
+
+### Obstacle prefabs
+
+`Assets/Prefabs/Obstacles/` — `Saw.prefab` (spinning, uses `MMRotate` + `StunOnTouch` + `MMPathMovement`).
 
 ### Scenes
 

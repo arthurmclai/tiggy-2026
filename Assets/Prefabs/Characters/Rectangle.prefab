@@ -736,7 +736,7 @@ MonoBehaviour:
   TriggerDamageFeedbackOnDeath: 1
   FeedbackIsProportionalToDamage: 0
   FlickerSpriteOnHit: 1
-  FlickerColor: {r: 1, g: 0.078431375, b: 0.078431375, a: 1}
+  FlickerColor: {r: 0.82641506, g: 0.82641506, b: 0.82641506, a: 1}
   ImmuneToKnockback: 0
   ImmuneToKnockbackIfZeroDamage: 0
   DeathFeedbacks: {fileID: 0}
