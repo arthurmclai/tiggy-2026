@@ -68,3 +68,4 @@ Uses Unity Input System (`Assets/InputSystem_Actions.inputactions`). Corgi Engin
 - Player IDs must be `"Player1"` through `"Player4"` — this string must match between the `Character` component and the `InputManager`.
 - New pickups extend `PickableItem` and override `Pick(GameObject picker)`. Use `MMTimeScaleEvent` or `CharacterGravity` public methods rather than touching `Time.timeScale` or physics directly.
 - Singletons (LevelManager, GameManager, GUIManager) are accessed via `.Instance`; never cache them in `Awake` — use `Start` or later.
+- Namespaces follow the directory path under `Assets/Scripts/`: `Tiggy.LevelManager`, `Tiggy.Modifiers`, `Tiggy.Pickups`, `Tiggy.Obstacles`, etc. Use block-scoped namespace syntax — Unity 6000.x targets C# 9 and does not support file-scoped namespaces (`namespace Foo;`).
