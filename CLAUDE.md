@@ -16,7 +16,7 @@ Tests are run through Unity's Test Runner window (`Window > General > Test Runne
 
 ### Corgi Engine overview
 
-All core engine code lives in `Assets/CorgiEngine/Common/Scripts/`. Treat this as a third-party library — extend by subclassing, don't edit in place.
+All core engine code lives in `Assets/ThirdParty/CorgiEngine/Common/Scripts/`. Treat this as a third-party library — extend by subclassing, don't edit in place.
 
 Key classes:
 
@@ -53,9 +53,9 @@ All game-specific scripts live in `Assets/Scripts/`, namespaced by folder:
 
 | Folder | Namespace | Contents |
 |---|---|---|
-| `Characters/` | `Tiggy.Characters` | `InfiniteHealth` (death resets health), `CharacterStunOnHit` (stuns self on hit, applies knockback deceleration) |
+| `Characters/` | `Tiggy.Characters` | `InfiniteHealth` (death resets health instead of dying), `CharacterStunOnHit` (preserves knockback through stun, applies natural deceleration while stunned) |
 | `Level/` | `Tiggy.Level` | Scene-level helpers: `DifferentiatePlayers`, `AssignPlayersToCinemachine`, `ConfineCinemachineToBounds` |
-| `Obstacles/` | `Tiggy.Obstacles` | `StunOnTouch` — subclass of `DamageOnTouch`, zero health damage, calls `CharacterStunOnHit.StunFor(duration)` |
+| `Obstacles/` | `Tiggy.Obstacles` | `StunOnTouch` (DamageOnTouch subclass, zero damage, optional per-kicker grace period), `SnailBody` (shell transition owner), `SnailStompable` + `ShellStompable` (Stompable subclasses), `Shell` (Shelled/Sliding state machine) |
 | `Modifiers/` | `Tiggy.Modifiers` | Abstract ScriptableObject bases: `Power`, `Usage`, `Resource`, `Area` — not yet implemented |
 | `Pickups/` | `Tiggy.Pickups` | `Pickup` — abstract `MMPoolableObject` composing the four modifier types — not yet implemented |
 
@@ -65,7 +65,7 @@ All game-specific scripts live in `Assets/Scripts/`, namespaced by folder:
 
 ### Obstacle prefabs
 
-`Assets/Prefabs/Obstacles/` — `Saw.prefab` (spinning, uses `MMRotate` + `StunOnTouch` + `MMPathMovement`).
+`Assets/Prefabs/Obstacles/` — `Saw.prefab` (spinning, uses `MMRotate` + `StunOnTouch` + `MMPathMovement` + kinematic `Rigidbody2D`), `Snail.prefab` (two-child: SnailBody patrol AI + SnailShell sliding state machine).
 
 ### Scenes
 

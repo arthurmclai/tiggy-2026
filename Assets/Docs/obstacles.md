@@ -21,6 +21,12 @@ A spinning blade. May be stationary or follow a path.
 - `StunOnTouch` (`Tiggy.Obstacles`) — subclass of `DamageOnTouch`, zero health damage, calls `CharacterStunOnHit.StunFor(StunDuration)` on the hit character. `StunDuration` is set per obstacle instance in the Inspector.
 - `MMRotate` (MoreMountains Tools) — spins the transform on Z axis, no physics involvement
 - `MMPathMovement` for pathed variants — waypoints are **relative offsets** from the object's starting position, not world coordinates. Waypoint 0 should be `(0,0,0)`.
+- `Rigidbody2D` (Body Type: Kinematic) — required so that Unity trigger events fire between the saw and other non-player objects (e.g. snail body). Without it, `OnTriggerEnter2D` only fires for objects that themselves have a Rigidbody2D (players do; AI enemies may not).
+
+**Layer: `MovingObjects` (Corgi layer 17)**
+Use the Corgi-defined `MovingObjects` layer for the saw. Notes:
+- `ObstaclesLayerMask` in Corgi's `LayerManager` is NOT a layer — it's a combined mask of Platforms + MovingPlatforms + OneWayPlatforms. There is no single "Obstacles" layer.
+- `MovingObjectsLayerMask` is only referenced by `CharacterCrushDetection` (optional ability). If players don't have that component, `MovingObjects` has no side effects.
 
 **Stun handling:**
 - Stun duration set on `StunOnTouch`, constant per obstacle instance
@@ -60,8 +66,9 @@ SnailRoot (empty)
 - `CharacterHorizontalMovement` — required by `AIActionPatrol`
 - `AIBrain` (one state: Patrolling, `ResetBrainOnEnable = true`), `AIActionPatrol`
 - `StunOnTouch` — always active while body is active
-- `SnailStompable` — subclass of `Stompable`; `PerformStomp` bounces the stomper, positions and activates shell via `Shell.Activate()`, deactivates self
-- `BoxCollider2D` (trigger) — one collider serves both CorgiController and StunOnTouch
+- `SnailStompable` — subclass of `Stompable`; `PerformStomp` bounces the stomper, calls `SnailBody.EnterShell()`
+- `SnailBody` — owns the shell reference and `EnterShell()` transition; `OnTriggerEnter2D` detects obstacles via configurable `ObstacleMask` and calls `Shell.ActivateAndKick()` so the shell immediately slides away
+- `BoxCollider2D` (trigger) — one collider serves both CorgiController and StunOnTouch/SnailBody trigger detection
 
 **SnailShell components:**
 - `CorgiController`, `Health`
@@ -74,6 +81,7 @@ SnailRoot (empty)
 `StunOnTouch.GiveGracePeriod = true` on the shell. When a player kicks or stomps the shell into sliding, `Shell` calls `StunOnTouch.SetGracePeriod(kicker, duration)` — that player is skipped in `OnCollideWithDamageable` for `KickGracePeriod` seconds, giving them time to move away. Other players are still stun-eligible immediately.
 
 **Key script: `Shell.cs`**
-- `Activate()` — called by `SnailStompable` on first stomp; enters Shelled state
+- `Activate()` — called by `SnailStompable` on player stomp; enters stationary Shelled state
+- `ActivateAndKick(float directionX)` — called by `SnailBody` on obstacle hit; skips Shelled and immediately starts sliding
 - `HandleStomp(CorgiController)` — called by `ShellStompable`; stops if sliding, kicks if shelled
 - Wall bounce: checks `IsCollidingLeft`/`IsCollidingRight` each frame and flips `_slideDirection`; owns `_slideSpeed` separately so wall impact (which zeros `Speed.x`) doesn't lose direction

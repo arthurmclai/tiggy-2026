@@ -37,9 +37,18 @@ namespace Tiggy.Obstacles
             _controller.SetForce(Vector2.zero);
         }
 
+        // Player stomp — enter stationary Shelled state, wait to be kicked
         public void Activate()
         {
             EnterShelled();
+        }
+
+        // Obstacle hit — skip Shelled and immediately slide away from the obstacle
+        public void ActivateAndKick(float directionX)
+        {
+            _slideSpeed = 0f;
+            gameObject.SetActive(true);
+            StartSliding(Mathf.Sign(directionX), null);
         }
 
         public void HandleStomp(CorgiController stomperController)
