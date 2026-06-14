@@ -75,6 +75,10 @@ All game-specific scripts live in `Assets/Scripts/`, namespaced by folder:
 
 Uses Unity Input System (`Assets/InputSystem_Actions.inputactions`). Corgi Engine bridges this via `InputSystemManagerEventsBased` (`ScriptsInputSystem/Scripts/`). Each player's input is routed to the matching `PlayerID`.
 
+## Design directives
+
+See `Assets/Docs/design_directives.md` for the full list. Read it before making any gameplay, UI, or scoring decision.
+
 ## Key conventions
 
 - Player IDs must be `"Player1"` through `"Player4"` — this string must match between the `Character` component and the `InputManager`.

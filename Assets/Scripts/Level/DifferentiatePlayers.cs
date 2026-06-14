@@ -1,6 +1,7 @@
 using MoreMountains.CorgiEngine;
 using MoreMountains.Tools;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Tiggy.Level
 {
@@ -13,6 +14,9 @@ namespace Tiggy.Level
             new Color(0.4f, 0.7f, 1f),
             new Color(1f, 1f, 0.4f),
         };
+
+        [Tooltip("PlayerName Text labels in player order (Player1, Player2, ...). Leave empty slots null for inactive players.")]
+        [SerializeField] private Text[] _playerNameLabels;
 
         private void OnEnable()
         {
@@ -35,6 +39,8 @@ namespace Tiggy.Level
                 Color color = _playerColors[i % _playerColors.Length];
                 foreach (var sr in players[i].GetComponentsInChildren<SpriteRenderer>())
                     sr.color = color;
+                if (_playerNameLabels != null && i < _playerNameLabels.Length && _playerNameLabels[i] != null)
+                    _playerNameLabels[i].color = color;
             }
         }
     }

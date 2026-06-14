@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "modifiers.md",
+                "file": "roles.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "modifiers"
+              "title": "roles"
             }
           }
         ]
@@ -184,5 +184,27 @@
     }
   },
   "active": "9116a4c9210081fe",
-  "lastOpenFiles": []
+  "lastOpenFiles": [
+    "roles.md.tmp.2728.e1147c7417b9",
+    "roles.md.tmp.2728.ff8485a4e470",
+    "lobby.md.meta",
+    "timer.md.meta",
+    "tag.md.meta",
+    "roles.md.meta",
+    "scoring.md.meta",
+    "scoring.md",
+    "game_types.md",
+    "game_types.md.tmp.2728.d10562ee8d49",
+    "timer.md",
+    "tag.md",
+    "roles.md",
+    "obstacles.md",
+    "modifiers.md",
+    "lobby.md",
+    "game_types.md.tmp.2728.ec8013146e36",
+    "design_directives.md",
+    "corgi_engine_patterns.md",
+    "game_types.md.tmp.2728.cdeefd9938dc",
+    "game_types.md.tmp.2728.410013a26d78"
+  ]
 }

@@ -102,9 +102,10 @@ Defines which characters `Power.Apply()` is called on.
 
 ## Example combinations
 
-| Pickup | Power | Usage | Resource | Area |
-|---|---|---|---|---|
-| Speed boost (self) | `SpeedPower` | `InstantUsage` | `TimedResource(5s)` | `SelfArea` |
-| Gravity flip (all, permanent) | `GravityFlipPower` | `InstantUsage` | `UnlimitedResource` | `AllPlayersArea` |
-| Stun grenade | `StunPower` | `TriggeredUsage` | `ChargeResource(1)` | `RadiusArea` |
-| Time slow (self, 3 uses) | `TimeDilationPower` | `TriggeredUsage` | `ChargeResource(3)` | `SelfArea` |
+| Pickup                        | Power               | Usage            | Resource            | Area             |
+| ----------------------------- | ------------------- | ---------------- | ------------------- | ---------------- |
+| Speed boost (self)            | `SpeedPower`        | `InstantUsage`   | `TimedResource(5s)` | `SelfArea`       |
+| Gravity flip (all, permanent) | `GravityFlipPower`  | `InstantUsage`   | `UnlimitedResource` | `AllPlayersArea` |
+| Stun grenade                  | `StunPower`         | `TriggeredUsage` | `ChargeResource(1)` | `RadiusArea`     |
+| Time slow (self, 3 uses)      | `TimeDilationPower` | `TriggeredUsage` | `ChargeResource(3)` | `SelfArea`       |
+| Gravity well                  | `GravityFlipPower`  | InstantUsage     | ChargeResource(1)   | RadiusArea       |
