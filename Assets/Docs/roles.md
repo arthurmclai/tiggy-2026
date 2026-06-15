@@ -1,6 +1,6 @@
 # Role System
 
-**Status:** Not started  
+**Status:** Implemented  
 **Depends on:** Nothing (foundational)  
 **Blocks:** Tag mechanic, scoring system, all tag-based game types
 
@@ -25,12 +25,12 @@ Not all roles are active in every game type. Sandbox and Keepy modes use `None`.
 
 ## Architecture
 
-### `RoleEffect` (abstract)
+### `RoleEffect` (abstract ScriptableObject)
 
-A small self-contained strategy that knows how to apply and revert one specific change to a character:
+A small self-contained strategy that knows how to apply and revert one specific change to a character. Implemented as a `ScriptableObject` so effects are Inspector-configurable assets — drag-and-dropped onto roles in the Editor, no code change required to compose a role differently.
 
 ```
-RoleEffect (abstract)
+RoleEffect : ScriptableObject (abstract)
   ├── Apply(Character)
   └── Revert(Character)
 ```
@@ -41,9 +41,11 @@ Concrete implementations:
 |---|---|
 | `DisableMovementEffect` | Disables `CharacterHorizontalMovement` |
 | `DisableJumpEffect` | Disables `CharacterJump` |
-| `SetHatEffect` | Swaps hat GameObject above player GO |
+| `SetHatEffect` | Instantiates a marker GameObject above the player (prefab reference, no scene ref). **TODO: rename to `SetMarkerEffect`** — the effect is generic (any role visual) and should not be named after a specific prop. Rename class, asset menu path, `HatPrefab` field → `MarkerPrefab`, `HatAnchor` constant → `MarkerAnchor`. |
 
 Adding a new constraint (slow movement, disable dash) is a new `RoleEffect` subclass only — no changes to `PlayerRole` or `GameTypeManager`. Mirrors the `Power` pattern in the modifier system.
+
+Being ScriptableObject-based also enables future player-facing game customisation — players could assemble their own roles from a menu of available effects without touching code.
 
 ### `GameTypeManager` (central)
 
@@ -72,10 +74,12 @@ Checks `PlayerRole.CurrentRole == Role.It` before initiating a tag. Fires `TagEv
 
 ## Role visuals
 
-`SetHatEffect` handles hat swapping as one of the role effects — consistent with how movement is handled. Hat prefab is configured on the effect instance in the Inspector. `None` role has no `SetHatEffect` so no hat is shown.
+`SetHatEffect` (pending rename to `SetMarkerEffect`) handles visual marker swapping as one of the role effects — consistent with how movement is handled. Marker prefab is configured on the effect instance in the Inspector. `None` role has no marker effect so nothing is shown.
 
-**MVP block-out:** Placeholder shape prefabs, one per role.  
-**Stretch goal:** Cosmetics system replaces `SetHatEffect` with a `SetCosmeticEffect` that defers to per-player customisation.
+The **It** role marker is a flag (`Assets/Sprites/Flag/Flag.png`). The flag prefab sits under the `Model` child of Rectangle so it inherits Corgi's model-level X-scale flip automatically. It has its own `Animator` driven by `AnimatorSync`, which mirrors the character's animator bool parameters (Idle, Walking, Jumping, Dashing, WallClinging). Key animator setup note: **do not check "Can Transition To Self"** on Any State transitions — doing so causes the animator to restart the clip every frame via the sync script, making the animation appear to not play.
+
+**MVP:** Flag prefab with `AnimatorSync` on the It role.  
+**Stretch goal:** Cosmetics system replaces `SetMarkerEffect` with a `SetCosmeticEffect` that defers to per-player customisation.
 
 ---
 

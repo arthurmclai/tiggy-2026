@@ -31,6 +31,7 @@ GameObject:
   - component: {fileID: 114408133200064378}
   - component: {fileID: -6400272675066511921}
   - component: {fileID: 1131847962240663701}
+  - component: {fileID: 4402285524237564131}
   m_Layer: 9
   m_Name: Rectangle
   m_TagString: Player
@@ -757,6 +758,18 @@ MonoBehaviour:
   OnlyDamageMaster: 1
   KillOnMasterHealthDeath: 0
   TargetDamageResistanceProcessor: {fileID: 0}
+--- !u!114 &4402285524237564131
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 119040}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6945e77e0f23e404eaa2abc8c5b0b3eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Tiggy.Roles.PlayerRole
 --- !u!1 &159142
 GameObject:
   m_ObjectHideFlags: 0
@@ -5952,6 +5965,7 @@ Transform:
   m_Children:
   - {fileID: 5900331877185321214}
   - {fileID: 8373968796185804078}
+  - {fileID: 837734805163893784}
   m_Father: {fileID: 425048}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3257601567138008143
@@ -11844,3 +11858,99 @@ MonoBehaviour:
         StateOnSkip: 1
         SetStateOnPlayerComplete: 0
         StateOnPlayerComplete: 1
+--- !u!1001 &8426647777614231663
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 2320345801386116752}
+    m_Modifications:
+    - target: {fileID: 4275564577663028768, guid: 18f9fce140071a4418177279bd5757e5,
+        type: 3}
+      propertyPath: m_Name
+      value: Flag
+      objectReference: {fileID: 0}
+    - target: {fileID: 9174198423937719415, guid: 18f9fce140071a4418177279bd5757e5,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.55
+      objectReference: {fileID: 0}
+    - target: {fileID: 9174198423937719415, guid: 18f9fce140071a4418177279bd5757e5,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 9174198423937719415, guid: 18f9fce140071a4418177279bd5757e5,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9174198423937719415, guid: 18f9fce140071a4418177279bd5757e5,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9174198423937719415, guid: 18f9fce140071a4418177279bd5757e5,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9174198423937719415, guid: 18f9fce140071a4418177279bd5757e5,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9174198423937719415, guid: 18f9fce140071a4418177279bd5757e5,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9174198423937719415, guid: 18f9fce140071a4418177279bd5757e5,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9174198423937719415, guid: 18f9fce140071a4418177279bd5757e5,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -180
+      objectReference: {fileID: 0}
+    - target: {fileID: 9174198423937719415, guid: 18f9fce140071a4418177279bd5757e5,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4275564577663028768, guid: 18f9fce140071a4418177279bd5757e5,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3445775550590474744}
+  m_SourcePrefab: {fileID: 100100000, guid: 18f9fce140071a4418177279bd5757e5, type: 3}
+--- !u!4 &837734805163893784 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 9174198423937719415, guid: 18f9fce140071a4418177279bd5757e5,
+    type: 3}
+  m_PrefabInstance: {fileID: 8426647777614231663}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &5738901857915303503 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4275564577663028768, guid: 18f9fce140071a4418177279bd5757e5,
+    type: 3}
+  m_PrefabInstance: {fileID: 8426647777614231663}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &3445775550590474744
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5738901857915303503}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0587e5e626da7f940ae294d25e114726, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Tiggy.Characters.AnimatorSync

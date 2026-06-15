@@ -53,9 +53,10 @@ All game-specific scripts live in `Assets/Scripts/`, namespaced by folder:
 
 | Folder | Namespace | Contents |
 |---|---|---|
-| `Characters/` | `Tiggy.Characters` | `InfiniteHealth` (death resets health instead of dying), `CharacterStunOnHit` (preserves knockback through stun, applies natural deceleration while stunned) |
+| `Characters/` | `Tiggy.Characters` | `InfiniteHealth` (death resets health instead of dying), `CharacterStunOnHit` (preserves knockback through stun, applies natural deceleration while stunned), `AnimatorSync` (mirrors parent Character's animator bool parameters to a child GameObject's animator; only fires SetBool on change to avoid restarting looping animations) |
 | `Level/` | `Tiggy.Level` | Scene-level helpers: `DifferentiatePlayers`, `AssignPlayersToCinemachine`, `ConfineCinemachineToBounds` |
 | `Obstacles/` | `Tiggy.Obstacles` | `StunOnTouch` (DamageOnTouch subclass, zero damage, optional per-kicker grace period), `SnailBody` (shell transition owner), `SnailStompable` + `ShellStompable` (Stompable subclasses), `Shell` (Shelled/Sliding state machine) |
+| `Roles/` | `Tiggy.Roles` | `Role` enum, `RoleEffect` (abstract ScriptableObject), `PlayerRole` (per-character component), `GameTypeManager` (abstract base). Effects in `Roles/Effects/`: `DisableMovementEffect`, `DisableJumpEffect`, `SetHatEffect` (TODO: rename to `SetMarkerEffect` — see roles.md) |
 | `Modifiers/` | `Tiggy.Modifiers` | Abstract ScriptableObject bases: `Power`, `Usage`, `Resource`, `Area` — not yet implemented |
 | `Pickups/` | `Tiggy.Pickups` | `Pickup` — abstract `MMPoolableObject` composing the four modifier types — not yet implemented |
 

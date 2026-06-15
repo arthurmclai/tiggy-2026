@@ -1,7 +1,9 @@
 {
   "permissions": {
     "allow": [
-      "WebSearch"
+      "WebSearch",
+      "WebFetch(domain:vrc.school)",
+      "WebFetch(domain:www.gamedeveloper.com)"
     ]
   }
 }
