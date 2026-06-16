@@ -54,7 +54,7 @@ All game-specific scripts live in `Assets/Scripts/`, namespaced by folder:
 | Folder | Namespace | Contents |
 |---|---|---|
 | `Characters/` | `Tiggy.Characters` | `InfiniteHealth` (death resets health instead of dying), `CharacterStunOnHit` (preserves knockback through stun, applies natural deceleration while stunned), `AnimatorSync` (mirrors parent Character's animator bool parameters to a child GameObject's animator; only fires SetBool on change to avoid restarting looping animations) |
-| `Level/` | `Tiggy.Level` | Scene-level helpers: `DifferentiatePlayers`, `AssignPlayersToCinemachine`, `ConfineCinemachineToBounds` |
+| `Level/` | `Tiggy.Level` | Scene-level helpers: `DifferentiatePlayers`, `AssignPlayersToCinemachine`, `ConfineCinemachineToBounds`, `SceneBootstrapper` (additively loads the level scene on top of the managers scene) |
 | `Obstacles/` | `Tiggy.Obstacles` | `StunOnTouch` (DamageOnTouch subclass, zero damage, optional per-kicker grace period), `SnailBody` (shell transition owner), `SnailStompable` + `ShellStompable` (Stompable subclasses), `Shell` (Shelled/Sliding state machine) |
 | `Roles/` | `Tiggy.Roles` | `Role` enum, `RoleEffect` (abstract ScriptableObject), `PlayerRole` (per-character component), `Tagger` (fires `TagEvent` on It→Free contact), `TagEvent` (MM-style struct event), `MarkerConfiguration` (per-character marker slots and current selection). Effects in `Roles/Effects/`: `DisableMovementEffect`, `DisableJumpEffect`, `SetMarkerEffect` (signals show/hide to `MarkerConfiguration`) |
 | `GameTypes/` | `Tiggy.GameTypes` | `GameTypeManager` (abstract base — owns character→role map, tag grace period, `SetRole`/`GetRole`/`GetPlayersWithRole`), `TiggyGameTypeManager` (picks random It at start, swaps It on `TagEvent`) |
@@ -72,7 +72,11 @@ All game-specific scripts live in `Assets/Scripts/`, namespaced by folder:
 
 ### Scenes
 
-`Assets/Scenes/Pipeline.unity` — the main (currently only) scene. `MultiplayerLevelManager` in the scene drives player spawning; set `PlayerPrefabs` on it.
+Two-scene split, loaded together via additive loading:
+- `Assets/Scenes/Game.unity` — managers scene. Contains `MultiplayerLevelManager` (drives player spawning; set `PlayerPrefabs` on it), `GameTypeHost` (nested under `MultiplayerLevelManager`), `SceneBootstrapper` (additively loads the level scene on `Start`), cameras, input manager, and other scene-wide singletons.
+- `Assets/Scenes/Pipeline.unity` — level scene. Contains only geometry, obstacles, and spawn points — no manager logic. Has a `DesignCamera` (disabled by default) so the level can be viewed in isolation without `Game.unity` loaded.
+
+Play from `Game.unity` — it loads `Pipeline.unity` additively on `Start`. Both scenes must be registered in `File > Build Settings` for this to work outside the Editor.
 
 ### Input
 
