@@ -10,11 +10,12 @@ namespace Tiggy.Characters
         static readonly int Jumping     = Animator.StringToHash("Jumping");
         static readonly int Dashing     = Animator.StringToHash("Dashing");
         static readonly int WallClinging = Animator.StringToHash("WallClinging");
+        static readonly int Dangling    = Animator.StringToHash("Dangling");
 
         Animator _source;
         Animator _other;
 
-        bool _idle, _walking, _jumping, _dashing, _wallClinging;
+        bool _idle, _walking, _jumping, _dashing, _wallClinging, _dangling;
 
         void Start()
         {
@@ -29,6 +30,7 @@ namespace Tiggy.Characters
             SyncBool(Jumping,      ref _jumping);
             SyncBool(Dashing,      ref _dashing);
             SyncBool(WallClinging, ref _wallClinging);
+            SyncBool(Dangling,     ref _dangling);
         }
 
         void SyncBool(int hash, ref bool cache)

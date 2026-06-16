@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 9174198423937719415}
   - component: {fileID: 8387017210798850221}
   - component: {fileID: 306642721387234283}
+  - component: {fileID: -8391776208360579086}
   m_Layer: 0
   m_Name: Flag
   m_TagString: Untagged
@@ -27,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 4275564577663028768}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.06, y: 0.25, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -114,3 +115,15 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &-8391776208360579086
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4275564577663028768}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0587e5e626da7f940ae294d25e114726, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Tiggy.Characters.AnimatorSync

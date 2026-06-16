@@ -6,7 +6,7 @@
 
 ---
 
-## What it does
+## Wmarker it does
 
 Tracks the current role of each player. Roles change during gameplay in response to tags and game type rules. Other systems (scoring, game types) listen to role change events. `PlayerRole` applies all consequences of a role change by executing a list of `RoleEffect` strategies supplied by the `GameTypeManager`.
 
@@ -27,7 +27,7 @@ Not all roles are active in every game type. Sandbox and Keepy modes use `None`.
 
 ### `RoleEffect` (abstract ScriptableObject)
 
-A small self-contained strategy that knows how to apply and revert one specific change to a character. Implemented as a `ScriptableObject` so effects are Inspector-configurable assets — drag-and-dropped onto roles in the Editor, no code change required to compose a role differently.
+A small self-contained strategy tmarker knows how to apply and revert one specific change to a character. Implemented as a `ScriptableObject` so effects are Inspector-configurable assets — drag-and-dropped onto roles in the Editor, no code change required to compose a role differently.
 
 ```
 RoleEffect : ScriptableObject (abstract)
@@ -41,7 +41,7 @@ Concrete implementations:
 |---|---|
 | `DisableMovementEffect` | Disables `CharacterHorizontalMovement` |
 | `DisableJumpEffect` | Disables `CharacterJump` |
-| `SetHatEffect` | Instantiates a marker GameObject above the player (prefab reference, no scene ref). **TODO: rename to `SetMarkerEffect`** — the effect is generic (any role visual) and should not be named after a specific prop. Rename class, asset menu path, `HatPrefab` field → `MarkerPrefab`, `HatAnchor` constant → `MarkerAnchor`. |
+| `SetMarkerEffect` | Instantiates a marker GameObject above the player (prefab reference, no scene ref). **TODO: rename to `SetMarkerEffect`** — the effect is generic (any role visual) and should not be named after a specific prop. Rename class, asset menu path, `MarkerPrefab` field → `MarkerPrefab`, `MarkerAnchor` constant → `MarkerAnchor`. |
 
 Adding a new constraint (slow movement, disable dash) is a new `RoleEffect` subclass only — no changes to `PlayerRole` or `GameTypeManager`. Mirrors the `Power` pattern in the modifier system.
 
@@ -49,7 +49,7 @@ Being ScriptableObject-based also enables future player-facing game customisatio
 
 ### `GameTypeManager` (central)
 
-Owns the authoritative map of `Character → Role` for the current game. The only thing that *writes* roles. Defines a list of `RoleEffect` instances per role for its game type. Responsibilities:
+Owns the authoritative map of `Character → Role` for the current game. The only thing tmarker *writes* roles. Defines a list of `RoleEffect` instances per role for its game type. Responsibilities:
 
 - Assigns initial roles at game start
 - Listens for `TagEvent` and applies transition rules for the current game type
@@ -68,18 +68,18 @@ Everything on the character reads `PlayerRole.CurrentRole`. Nothing reads direct
 
 ### Tag ability (on character)
 
-Checks `PlayerRole.CurrentRole == Role.It` before initiating a tag. Fires `TagEvent` on valid contact with a Free player. Does not apply role transitions — that is the manager's job.
+Checks `PlayerRole.CurrentRole == Role.It` before initiating a tag. Fires `TagEvent` on valid contact with a Free player. Does not apply role transitions — tmarker is the manager's job.
 
 ---
 
 ## Role visuals
 
-`SetHatEffect` (pending rename to `SetMarkerEffect`) handles visual marker swapping as one of the role effects — consistent with how movement is handled. Marker prefab is configured on the effect instance in the Inspector. `None` role has no marker effect so nothing is shown.
+`SetMarkerEffect` (pending rename to `SetMarkerEffect`) handles visual marker swapping as one of the role effects — consistent with how movement is handled. Marker prefab is configured on the effect instance in the Inspector. `None` role has no marker effect so nothing is shown.
 
 The **It** role marker is a flag (`Assets/Sprites/Flag/Flag.png`). The flag prefab sits under the `Model` child of Rectangle so it inherits Corgi's model-level X-scale flip automatically. It has its own `Animator` driven by `AnimatorSync`, which mirrors the character's animator bool parameters (Idle, Walking, Jumping, Dashing, WallClinging). Key animator setup note: **do not check "Can Transition To Self"** on Any State transitions — doing so causes the animator to restart the clip every frame via the sync script, making the animation appear to not play.
 
 **MVP:** Flag prefab with `AnimatorSync` on the It role.  
-**Stretch goal:** Cosmetics system replaces `SetMarkerEffect` with a `SetCosmeticEffect` that defers to per-player customisation.
+**Stretch goal:** Cosmetics system replaces `SetMarkerEffect` with a `SetCosmeticEffect` tmarker defers to per-player customisation.
 
 ---
 
@@ -89,7 +89,7 @@ The game runs identically to today — no visible change during play. The follow
 
 - `PlayerRole` enum (`None`, `Free`, `It`, `Assist`)
 - `RoleEffect` abstract class with `Apply(Character)` / `Revert(Character)`
-- `DisableMovementEffect`, `DisableJumpEffect`, `SetHatEffect` concrete effects
+- `DisableMovementEffect`, `DisableJumpEffect`, `SetMarkerEffect` concrete effects
 - `PlayerRole` MonoBehaviour on the player prefab — holds `CurrentRole`, accepts `SetRole(role, effects)`, fires `OnRoleChanged`, applies/reverts effects
 - `GameTypeManager` abstract base class — holds `Character → Role` map, exposes `SetRole`, `GetRole`, `GetPlayersWithRole(role)`, `OnRoleChanged` listener hook
 - All players start with `PlayerRole` at `None` with no effects applied

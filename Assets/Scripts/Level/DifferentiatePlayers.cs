@@ -1,5 +1,6 @@
 using MoreMountains.CorgiEngine;
 using MoreMountains.Tools;
+using Tiggy.Roles;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -41,6 +42,9 @@ namespace Tiggy.Level
                     sr.color = color;
                 if (_playerNameLabels != null && i < _playerNameLabels.Length && _playerNameLabels[i] != null)
                     _playerNameLabels[i].color = color;
+                var markerConfig = players[i].GetComponent<MarkerConfiguration>();
+                if (markerConfig != null)
+                    markerConfig.PlayerColor = color;
             }
         }
     }
