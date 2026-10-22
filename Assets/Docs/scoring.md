@@ -33,23 +33,41 @@ Separate from novelty. A combo builds when a player performs many *different* ac
 
 Combo window duration TBD — tune during playtesting.
 
-## Action registry (initial set)
+## Event registry
 
-| Action | Fired by |
-|---|---|
-| Tag | Tag mechanic |
-| Avoid tag (close call) | Tag mechanic |
-| Jump | `CharacterJump` ability |
-| Pick up powerup | Powerup system |
-| Use power | Powerup system |
-| Stomp obstacle | `SnailStompable` / `ShellStompable` |
-| Kick shell | `Shell` |
-| Proximity tension bonus | Tag mechanic / game type scripts |
-| Game-type specific actions | Game type scripts |
+Scoring works by listening to domain events that already describe "what happened" — gameplay systems never know scoring exists. `ScoreManager` (and eventually SFX, VFX, celebration-screen stat tracking) all subscribe independently to the same events.
 
-**Proximity tension bonus:** Awarded when a Free player is surrounded by multiple chasers and escapes. Rewards the most exciting moments in any chase game — the narrow escape, the outmanoeuvring of several It players at once. Appears in Gang Up, Red Rover, and Octopus. Exact detection (radius, number of nearby It players, escape threshold) TBD during playtesting.
+This table is the running catalogue: every meaningful gameplay event, whether it already exists (Corgi or our own code) or needs to be added, and who would fire it. Add to this list whenever a new system is built — it's useful far beyond scoring.
 
-Close call detection (avoid tag) needs definition — proximity threshold plus directional escape, TBD.
+| Event | Fired by | Exists? |
+|---|---|---|
+| `MMCharacterEvent` (`Jump`) | Corgi `CharacterJump` | Yes |
+| `MMCharacterEvent` (`Dash`) | Corgi `CharacterDash` | Yes |
+| `MMCharacterEvent` (`WallJump`) | Corgi `CharacterWallJump` | Yes |
+| `MMCharacterEvent` (`WallCling`) | Corgi `CharacterWallClinging` | Yes |
+| `MMCharacterEvent` (`Crouch`) | Corgi `CharacterCrouch` | Yes |
+| `MMCharacterEvent` (`Glide`) | Corgi `CharacterGlide` | Yes |
+| `MMCharacterEvent` (`Dive`) | Corgi `CharacterDive` | Yes |
+| `MMCharacterEvent` (`Roll`) | Corgi `CharacterRoll` | Yes |
+| `MMCharacterEvent` (`Stun`) | Corgi `CharacterStun` (via `CharacterStunOnHit`) | Yes |
+| `MMDamageTakenEvent` | Corgi `Health.Damage()` — fires even at zero damage, so `StunOnTouch` hits included | Yes |
+| `HealthChangeEvent` / `HealthDeathEvent` | Corgi `Health` | Yes (death not used — `InfiniteHealth` resets instead) |
+| `TagEvent` | `Tagger` | Yes |
+| Shell kicked (Shelled → Sliding) | `Shell` | No — needs new event |
+| Shell stomped while sliding (Sliding → Shelled) | `Shell` | No — needs new event |
+| Shell respawn (snail re-appears) | `Shell` | No — needs new event |
+| Snail shelled by player stomp | `SnailBody` / `SnailStompable` | No — needs new event |
+| Snail shelled by obstacle (saw hits snail) | `SnailBody` | No — needs new event |
+| Role changed (`PlayerRole.OnRoleChanged`) | `PlayerRole` | Yes, but C# `event` not MM event — fine for in-process listeners on the same character, would need converting to an MM event if cross-system listeners (scoring) want it directly. Scoring likely doesn't need this — `TagEvent` already captures the moment |
+| Avoid tag (close call) | Tag mechanic | No — needs definition: proximity threshold + directional escape, TBD |
+| Proximity tension bonus | Tag mechanic / game type scripts | No — needs definition: radius, number of nearby It players, escape threshold, TBD. Appears in Gang Up, Red Rover, Octopus |
+| Pick up powerup | Powerup system | No — powerup system not yet implemented |
+| Use power | Powerup system | No — powerup system not yet implemented |
+| Game-type specific moments (e.g. last Free player caught) | Game type managers | No — define per game type as built |
+
+## Action → score mapping
+
+`ScoreManager` is the only place that knows which events score and how much. It implements `MMEventListener<T>` per event type above that's marked scoring-relevant, extracts `(actor, actionId)` from each, and feeds a shared novelty/combo routine. Adding a new scoring action later means adding one listener method to `ScoreManager` — no changes anywhere else.
 
 ## Display
 

@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "roles.md",
+                "file": "modifiers.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "roles"
+              "title": "modifiers"
             }
           }
         ]
@@ -185,6 +185,10 @@
   },
   "active": "9116a4c9210081fe",
   "lastOpenFiles": [
+    "scoring.md",
+    "design_directives.md.tmp.3097.1a66c4a60b68",
+    "roles.md",
+    "scoring.md.tmp.1928.df1b90ccef93",
     "roles.md.tmp.1928.22c3c5dc0a28",
     "roles.md.tmp.4311.e9c9f5eb1b7e",
     "roles.md.tmp.4311.202aeeb2b9b6",
@@ -192,13 +196,8 @@
     "tag.md",
     "tag.md.tmp.4311.36f3d5ffac72",
     "tag.md.tmp.4311.2fa3b557c990",
-    "roles.md",
     "roles.md.tmp.2728.a74df7cb3c7f",
     "roles.md.tmp.2728.4710db3cdb96",
-    "roles.md.tmp.2728.e1147c7417b9",
-    "roles.md.tmp.2728.ff8485a4e470",
-    "lobby.md.meta",
-    "scoring.md",
     "game_types.md",
     "timer.md",
     "obstacles.md",

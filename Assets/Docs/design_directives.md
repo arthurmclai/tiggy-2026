@@ -2,6 +2,10 @@
 
 Design principles and guidelines to follow but can be consciously broken for the purpose of keeping things fun and cooperative. Apply when making any gameplay, UI, or scoring decision.
 
+## Playtesting notes
+
+- **Flag marker creates pressure, not fun** (playtested with a child). The It indicator made the game feel too competitive/pressured. Consider making role visuals more subtle or celebratory rather than a singling-out marker. To revisit during polish.
+
 ## Co-op first, minimise losing
 
 Games are cooperative where possible. Competitive tension comes from chaos and fun, not from punishment or ranking. Where individual performance is tracked, frame it as contribution to a shared outcome.
